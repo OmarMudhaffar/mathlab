@@ -28,6 +28,10 @@
 
   let cfg = null;
   let panelOpen = false;
+
+  function arHelpOn() {
+    try { return localStorage.getItem('mathlab.ar') === 'on'; } catch (e) { return false; }
+  }
   let context = { where: 'map' };
   let conv = [];
   let busy = false;
@@ -78,10 +82,12 @@
 '6. STAY GROUNDED. Use the student\'s actual numbers; if unsure of their reasoning, ask for one ' +
 'step rather than guessing.\n' +
 '7. CELEBRATE PRECISELY. When they get it, name exactly what they did right, in one line.\n' +
-'8. SIMPLE ENGLISH + ARABIC SUPPORT. The student\'s academic English is limited; Arabic is their ' +
-'stronger language. Use short sentences and everyday words. For every technical term, add the ' +
-'Arabic in parentheses on first use — e.g. "eigenvector (متجه ذاتي)". If the student writes in ' +
-'Arabic or asks for Arabic, answer mainly in Arabic with the English technical terms kept in.\n\n' +
+'8. SIMPLE ENGLISH. The student\'s academic English is limited — use short sentences and everyday ' +
+'words, always.' + (arHelpOn()
+  ? ' ARABIC SUPPORT IS ON: for every technical term, add the Arabic in parentheses on first use — ' +
+    'e.g. "eigenvector (متجه ذاتي)". If the student writes in Arabic, answer mainly in Arabic ' +
+    'with the English technical terms kept in.'
+  : ' Answer in English. Only use Arabic if the student writes to you in Arabic first.') + '\n\n' +
 'FORMAT: plain text with unicode math symbols (∧ ∨ ¬ → ↔ ∀ ∃ ∈ ⊆ ⊕ ≡), never LaTeX. ' +
 'Inline code in backticks. No headings, no lists longer than 3 items.\n' +
 'Trust CONCEPT_SUMMARY over your own memory of what this lab teaches.';
@@ -227,8 +233,7 @@
 'named misconception (use the provided tags or coin a new snake-case tag). Never pad with absurd options.\n' +
 '- Each distractor "why" says why it is TEMPTING, then why it fails.\n' +
 '- hints is a 4-rung ladder: nudge → strategy → first step → full solution.\n' +
-'- Simple English (the student\'s academic English is limited); add Arabic in parentheses for ' +
-'hard technical terms.\n' +
+'- Simple English (the student\'s academic English is limited).\n' +
 '- Difficulty target: a student rated R (given) should have ~75% success.\n' +
 '- Unicode math symbols (∧ ∨ ¬ ∀ ∃ ⊕ ≡), never LaTeX. HTML <code>/<b> allowed.\n' +
 '- No ambiguity: a domain expert must agree the correct answer is uniquely correct.\n' +
@@ -381,7 +386,7 @@
       ? conv.map(m =>
           '<div class="mt-msg ' + (m.role === 'user' ? 'me' : 'ai') + '">' + md(m.content) + '</div>'
         ).join('')
-      : '<p class="mt-empty">The machine\'s helper. Ask why an answer is wrong, ask for a simpler explanation (بالعربي إذا تحب), or go deeper than the lesson.</p>';
+      : '<p class="mt-empty">The machine\'s helper. Ask why an answer is wrong, ask for a simpler explanation, or go deeper than the lesson.</p>';
     els.msgs.scrollTop = els.msgs.scrollHeight;
   }
 
@@ -402,7 +407,9 @@
             '<button data-q="Explain this concept at Level 1 — a simple picture, easy words, no formal symbols.">explain · L1</button>' +
             '<button data-q="Explain this concept at Level 2 — the exact definitions and the key proof idea.">explain · L2</button>' +
             '<button data-q="Explain this concept at Level 3 — a short JS code example and where this is used in real software.">explain · L3</button>' +
-            '<button data-q="Explain that again in very simple English, with Arabic for the hard words.">بسّطها · simplify</button>' +
+            (arHelpOn()
+              ? '<button data-q="Explain that again in very simple English, with Arabic for the hard words.">بسّطها · simplify</button>'
+              : '<button data-q="Explain that again in very simple English, short sentences.">simplify</button>') +
             (context.question ? '<button data-q="Why is my answer to the current question wrong? Diagnose my thinking first.">why wrong?</button>' : '') +
           '</div>' +
           '<form class="mt-inputrow" id="mt-form">' +

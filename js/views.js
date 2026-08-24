@@ -42,9 +42,24 @@
     return 'msock s-' + st + (boss ? ' s-boss' : '');
   }
 
-  /* add Arabic glosses to highlighted technical terms */
+  /* Arabic helpers are OPT-IN: English-only by default, toggle in the map footer */
+  function arOn() {
+    try { return localStorage.getItem('mathlab.ar') === 'on'; } catch (e) { return false; }
+  }
+
+  /* remove embedded Arabic from content strings when Arabic help is off */
+  function stripAr(s) {
+    if (arOn()) return s;
+    return String(s)
+      .replace(/\s*\([^()]*[؀-ۿ][^()]*\)/g, '')                       /* (arabic…) glosses */
+      .replace(/[؀-ۿ][؀-ۿ\s،؛؟!٪ـ—–-]*[؀-ۿ]|[؀-ۿ]/g, '') /* arabic runs */
+      .replace(/\s*·\s*(<\/|<br|$)/gm, '$1')                                    /* dangling " · " separators */
+      .replace(/\s+([.,!?،])/g, '$1');
+  }
+
+  /* add Arabic glosses to highlighted technical terms (only when Arabic help is on) */
   function glossify(container) {
-    if (!window.GLOSSARY) return;
+    if (!window.GLOSSARY || !arOn()) return;
     container.querySelectorAll('.term').forEach(el => {
       if (el.querySelector('.term-ar')) return;
       let key = el.textContent.trim().toLowerCase().replace(/’/g, "'");
@@ -269,13 +284,14 @@
       panelsHtml +
       '<div class="next-up quiet">' +
         '<span class="mono-label">study tools</span>' +
-        '<p class="lead"><b>∞ Gym</b> — معادلات بلا نهاية · <b>📖 Manual</b> — كل القوانين في مكان واحد</p>' +
+        '<p class="lead"><b>∞ Gym</b> — endless equations · <b>📖 Manual</b> — every law in one place</p>' +
         '<button class="btn ghost" data-go="#/laws" style="margin-left:auto">📖 MANUAL</button>' +
         '<button class="btn ghost" data-go="#/gym" style="margin-left:0">∞ GYM</button>' +
       '</div>' +
       quoteCard('daily', true) +
       '<div class="map-foot">' +
         oracleFoot +
+        '<button class="wipe" id="ar-pref-btn" style="color:var(--accent)" title="show Arabic word helps next to English">' + (arOn() ? 'عربي: ON' : 'arabic help: OFF') + '</button>' +
         '<button class="wipe" id="backup-btn" style="color:var(--ok)" title="download everything: progress, notes, translations">⬇ backup</button>' +
         '<button class="wipe" id="restore-btn" title="restore from a backup file">⬆ restore</button>' +
         '<input type="file" id="restore-file" accept=".json,application/json" hidden>' +
@@ -285,6 +301,10 @@
 
     bindNav(root);
     window.Mentor.setContext({ where: 'map' });
+    document.getElementById('ar-pref-btn').addEventListener('click', () => {
+      try { localStorage.setItem('mathlab.ar', arOn() ? 'off' : 'on'); } catch (e) {}
+      window.App.refresh();
+    });
     document.getElementById('backup-btn').addEventListener('click', () => window.State.exportBackup());
     const restoreInput = document.getElementById('restore-file');
     document.getElementById('restore-btn').addEventListener('click', () => restoreInput.click());
@@ -400,14 +420,14 @@
       '<div class="tabs">' + tabsHtml + '</div>' +
       '<div class="tab-body">' +
         fastNote +
-        '<div id="lesson-content">' + lv.html + '</div>' +
+        '<div id="lesson-content">' + stripAr(lv.html) + '</div>' +
         (lv.widget ? '<div id="widget-mount"></div>' : '') +
         '<div class="level-action">' + action + '</div>' +
       '</div>' +
       (function () {
         const existing = window.Notes.forNode(nodeId);
         return '<details class="node-notes"' + (existing && existing.body ? ' open' : '') + '>' +
-          '<summary>📝 My notes on this lesson · ملاحظاتي</summary>' +
+          '<summary>📝 My notes on this lesson' + (arOn() ? ' · ملاحظاتي' : '') + '</summary>' +
           '<textarea id="node-note" placeholder="quick notes while studying — autosaves…">' + esc(existing ? existing.body : '') + '</textarea>' +
         '</details>';
       })() +
@@ -415,7 +435,7 @@
 
     bindNav(root);
     glossify(root);
-    wireArToggle(nodeId, tab, lv.html);
+    wireArToggle(nodeId, tab, stripAr(lv.html));
     window.Mentor.setContext({ where: 'node', nodeId: nodeId, level: tab });
     if (lv.widget) window.Widgets.mount(lv.widget, document.getElementById('widget-mount'));
 
@@ -467,7 +487,7 @@
       '</div>' +
       '<div class="tabs" style="margin-top:14px;"><span class="tab-spacer"></span><button class="tab lang-toggle" id="ar-toggle">🌐 عربي</button></div>' +
       '<div class="tab-body">' +
-        '<div id="lesson-content">' + n.intro + '</div>' +
+        '<div id="lesson-content">' + stripAr(n.intro) + '</div>' +
         '<div class="level-action">' +
           (powered
             ? '<p class="status"><span class="done">GATEWORK ONLINE ✓</span> — rerun the integration test anytime.</p>'
@@ -478,7 +498,7 @@
       '</div>';
     bindNav(root);
     glossify(root);
-    wireArToggle(n.id, 'boss', n.intro);
+    wireArToggle(n.id, 'boss', stripAr(n.intro));
     window.Mentor.setContext({ where: 'node', nodeId: n.id, level: 'boss' });
   }
 
@@ -504,7 +524,7 @@
     const pages = window.Notes.list();
     root.innerHTML = topbarHtml() + '<div class="boot-in">' +
       '<button class="crumb" data-go="#/">← system schematic</button>' +
-      '<h1 class="screen-title">Notebook · دفتر الملاحظات</h1>' +
+      '<h1 class="screen-title">Notebook' + (arOn() ? ' · دفتر الملاحظات' : '') + '</h1>' +
       '<p class="screen-sub">Lecture notes, ideas, anything — autosaved on this computer. Use it live in class: one click, start typing.</p>' +
       '<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px;">' +
         '<button class="btn power" id="note-new">+ NEW PAGE</button>' +
@@ -556,13 +576,13 @@
         '</div>' +
         (viewing
           ? '<div class="note-preview">' + (mdLite(p.body) || '<span class="mono-label">empty page</span>') + '</div>'
-          : '<textarea class="note-body" id="nt-body" placeholder="type… (supports **bold**, `code`, # headers, - lists)\nاكتب ملاحظاتك هنا — يُحفظ تلقائياً">' + esc(p.body) + '</textarea>') +
+          : '<textarea class="note-body" id="nt-body" placeholder="type… autosaves as you write (supports **bold**, `code`, # headers, - lists)' + (arOn() ? '\nاكتب ملاحظاتك هنا — يُحفظ تلقائياً' : '') + '">' + esc(p.body) + '</textarea>') +
         '</div>';
       bindNav(root);
 
       document.getElementById('nt-view').addEventListener('click', () => { viewing = !viewing; render(); });
       document.getElementById('nt-del').addEventListener('click', () => {
-        if (confirm('Delete this page? (لا يمكن التراجع)')) { window.Notes.remove(p.id); window.App.go('#/notes'); }
+        if (confirm('Delete this page? This cannot be undone.')) { window.Notes.remove(p.id); window.App.go('#/notes'); }
       });
       const title = document.getElementById('nt-title');
       title.addEventListener('input', () => queueSave({ title: title.value }));
@@ -591,20 +611,20 @@
   function manual(root) {
     let html = topbarHtml() + '<div class="boot-in">' +
       '<button class="crumb" data-go="#/">← system schematic</button>' +
-      '<h1 class="screen-title">The Manual · المرجع</h1>' +
+      '<h1 class="screen-title">The Manual' + (arOn() ? ' · المرجع' : '') + '</h1>' +
       '<p class="screen-sub">Every common law, formula, and fixed value in one place — with a link to the lesson that teaches it. Your exam cheat-sheet, built in.</p>' +
-      '<input class="free-input ref-search" id="ref-search" placeholder="search… (try: cos, bayes, gcd, مشتقة)" autocomplete="off">';
+      '<input class="free-input ref-search" id="ref-search" placeholder="search… (try: cos, bayes, gcd)" autocomplete="off">';
 
     window.REFERENCE.forEach((sec, si) => {
       html += '<div class="track-panel ref-sec" style="--tc: var(' + sec.color + ')" data-sec="' + si + '">' +
         '<div class="panel-head"><span class="chip"></span><h2>' + esc(sec.section) + '</h2>' +
-        '<span class="mono-label">' + esc(sec.sectionAr) + '</span></div>' +
+        (arOn() ? '<span class="mono-label">' + esc(sec.sectionAr) + '</span>' : '') + '</div>' +
         (sec.note ? '<p class="ref-note">' + esc(sec.note) + '</p>' : '') +
         '<div class="tbl-scroll"><table class="ref-table">' +
         sec.items.map(it =>
           '<tr class="ref-row" data-search="' + esc((it.name + ' ' + it.ar + ' ' + it.f + ' ' + it.note).toLowerCase()) + '">' +
             '<td class="ref-f">' + it.f + '</td>' +
-            '<td class="ref-name"><b>' + esc(it.name) + '</b> <span class="ref-ar">' + esc(it.ar) + '</span>' +
+            '<td class="ref-name"><b>' + esc(it.name) + '</b> ' + (arOn() ? '<span class="ref-ar">' + esc(it.ar) + '</span>' : '') +
               '<span class="payoff">' + it.note + '</span></td>' +
             '<td class="ref-link-cell">' + (it.nodeId && window.NODES[it.nodeId]
               ? '<a href="#/node/' + it.nodeId + '">→ ' + window.NODES[it.nodeId].num + '</a>' : '') + '</td>' +
@@ -636,8 +656,8 @@
   function gym(root) {
     let html = topbarHtml() + '<div class="boot-in">' +
       '<button class="crumb" data-go="#/">← system schematic</button>' +
-      '<h1 class="screen-title">Practice Gym · صالة التمارين</h1>' +
-      '<p class="screen-sub">Endless fresh equations (معادلات بلا نهاية) — every one comes with a step-by-step solution, a code version, a 💡 trick, and where it is used. +3 XP per correct answer.</p>';
+      '<h1 class="screen-title">Practice Gym' + (arOn() ? ' · صالة التمارين' : '') + '</h1>' +
+      '<p class="screen-sub">Endless fresh equations — every one comes with a step-by-step solution, a code version, a 💡 trick, and where it is used. +3 XP per correct answer.</p>';
 
     function cardsHtml(fams) {
       return '<div class="gym-grid">' +
@@ -645,7 +665,7 @@
           '<button class="gym-card" data-go="#/drill/' + g.id + '">' +
             '<b>' + esc(g.title) +
             (g.tier === 'advanced' ? ' <i class="gym-tier adv">ADV</i>' : '') +
-            '</b><span>' + esc(g.titleAr) + '</span>' +
+            '</b>' + (arOn() ? '<span>' + esc(g.titleAr) + '</span>' : '') +
           '</button>').join('') +
         '</div>';
     }
@@ -654,7 +674,7 @@
     if (basics.length) {
       html += '<div class="track-panel" style="--tc: var(--power)">' +
         '<div class="panel-head"><span class="chip"></span><h2>School Basics — be FAST at these</h2>' +
-        '<span class="mono-label">أساسيات — السرعة هنا هي الهدف</span></div>' +
+        '<span class="mono-label">' + (arOn() ? 'أساسيات — السرعة هنا هي الهدف' : 'speed is the goal') + '</span></div>' +
         cardsHtml(basics) + '</div>';
     }
     window.TRACKS.forEach(t => {
@@ -684,14 +704,14 @@
     function solutionHtml(e, title) {
       return '<div class="sol-panel">' +
         (title ? '<p class="mono-label" style="color:var(--accent)">' + title + '</p>' +
-          '<p class="q-prompt" style="font-size:15px">' + e.prompt + '</p>' : '') +
+          '<p class="q-prompt" style="font-size:15px">' + stripAr(e.prompt) + '</p>' : '') +
         '<p class="sol-answer">Answer: <b>' + (e.accept && e.accept.length ? esc(e.accept[0]) : String(Math.round(e.value * 1000) / 1000)) + '</b></p>' +
-        '<p class="mono-label" style="color:var(--power)">step by step · الحل خطوة بخطوة</p>' +
-        '<ol class="sol-steps">' + e.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' +
-        '<p class="mono-label">💻 in code · بالكود</p>' +
+        '<p class="mono-label" style="color:var(--power)">step by step' + (arOn() ? ' · الحل خطوة بخطوة' : '') + '</p>' +
+        '<ol class="sol-steps">' + e.steps.map(s => '<li>' + stripAr(s) + '</li>').join('') + '</ol>' +
+        '<p class="mono-label">💻 in code' + (arOn() ? ' · بالكود' : '') + '</p>' +
         '<pre><code>' + esc(e.code) + '</code></pre>' +
-        (e.tip ? '<p class="sol-tip">' + e.tip + '</p>' : '') +
-        '<p class="sol-usage">🌍 ' + e.usage + '</p>' +
+        (e.tip ? '<p class="sol-tip">' + stripAr(e.tip) + '</p>' : '') +
+        '<p class="sol-usage">🌍 ' + stripAr(e.usage) + '</p>' +
       '</div>';
     }
 
@@ -700,18 +720,18 @@
         '<div class="arena">' +
         '<div class="arena-top">' +
           '<button class="crumb" style="margin:0" data-go="#/gym">← gym</button>' +
-          '<span class="mono-label">∞ ' + esc(fam.title) + ' · ' + esc(fam.titleAr) + '</span>' +
+          '<span class="mono-label">∞ ' + esc(fam.title) + (arOn() ? ' · ' + esc(fam.titleAr) : '') + '</span>' +
           '<span class="mono-label" style="margin-left:auto">' + correct + '/' + attempted + ' · +' + xpTotal + ' XP</span>' +
         '</div>' +
         '<div class="q-card">' +
-          '<p class="q-prompt">' + ex.prompt + '</p>' +
+          '<p class="q-prompt">' + stripAr(ex.prompt) + '</p>' +
           '<input class="free-input" id="drill-in" autocomplete="off" spellcheck="false" placeholder="answer… (fractions like 3/4 are OK)">' +
           '<div id="drill-verdict"></div>' +
           '<div id="drill-sol"></div>' +
           '<div class="q-actions">' +
             '<button class="btn" id="drill-submit">SUBMIT ⏎</button>' +
-            '<button class="btn ghost" id="drill-solution">📖 SOLUTION · الحل</button>' +
-            '<button class="btn ghost" id="drill-example">🧪 EXAMPLE · مثال</button>' +
+            '<button class="btn ghost" id="drill-solution">📖 SOLUTION' + (arOn() ? ' · الحل' : '') + '</button>' +
+            '<button class="btn ghost" id="drill-example">🧪 EXAMPLE' + (arOn() ? ' · مثال' : '') + '</button>' +
             '<button class="btn ghost" id="drill-next">NEXT →</button>' +
           '</div>' +
           (siblings.length > 1
@@ -732,7 +752,7 @@
       });
       document.getElementById('drill-example').addEventListener('click', () => {
         const e2 = fam.gen();
-        document.getElementById('drill-sol').innerHTML = solutionHtml(e2, 'worked example · مثال محلول');
+        document.getElementById('drill-sol').innerHTML = solutionHtml(e2, 'worked example' + (arOn() ? ' · مثال محلول' : ''));
       });
       inp.addEventListener('keydown', e => {
         if (e.key === 'Enter') { e.preventDefault(); answered ? next() : submit(); }
@@ -1055,7 +1075,7 @@
     return (
       '<blockquote class="quote-card">' +
         '<p class="q-text">“' + esc(q.t) + '”</p>' +
-        '<p class="q-ar">' + esc(q.ar) + '</p>' +
+        (arOn() ? '<p class="q-ar">' + esc(q.ar) + '</p>' : '') +
         '<p class="q-author">— ' + esc(q.a) + '</p>' +
       '</blockquote>'
     );
