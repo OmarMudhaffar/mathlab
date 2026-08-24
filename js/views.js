@@ -18,7 +18,7 @@
     const s = window.State.get();
     return (
       '<div class="topbar">' +
-        '<button class="wordmark" data-go="#/">MATH<span class="lab">LAB</span></button>' +
+        '<button class="wordmark" data-go="#/" title="prepared by Omar :)">MATH<span class="lab">LAB</span></button>' +
         '<span class="mono-label">boot the machine</span>' +
         '<span class="spacer"></span>' +
         '<button class="stat-chip chip-btn" data-go="#/laws" title="The Manual — laws & formulas (المرجع)">📖 <b>MANUAL</b></button>' +
@@ -135,7 +135,8 @@
           '&gt; MEMORY BANKS ......... <span class="ok">OK</span><br>' +
           '&gt; GATEWORK ............. <span class="warn">DARK</span><br>' +
           '&gt; LATTICE / RENDER / OPTIMIZER / ORACLE ... <span class="warn">DARK</span><br>' +
-          '&gt; CAUSE: MATHEMATICAL SUBSTRATE MISSING' +
+          '&gt; CAUSE: MATHEMATICAL SUBSTRATE MISSING<br>' +
+          '&gt; SYSTEM ARCHITECT ..... <span class="ok">OMAR :)</span>' +
         '</p>' +
         '<h1>This machine is dead.<br><em>You</em> are the power source.</h1>' +
         '<p class="pitch">Every concept you master routes energy through the schematic. Master a track, defeat its integration test, and a component comes online — upgrading the lab you are standing in.</p>' +
@@ -300,6 +301,7 @@
         '<button class="btn ghost" data-go="#/gym" style="margin-left:0">∞ GYM</button>' +
       '</div>' +
       quoteCard('daily', true) +
+      '<p class="signature hand">— prepared by Omar :)</p>' +
       '<div class="map-foot">' +
         oracleFoot +
         '<button class="wipe" id="ar-pref-btn" style="color:var(--accent)" title="show Arabic word helps next to English">' + (arOn() ? 'عربي: ON' : 'arabic help: OFF') + '</button>' +
@@ -1186,6 +1188,7 @@
           '<h2>' + (fullBoot ? 'THE MACHINE — FULL BOOT' : track.component + ' — POWERED') + '</h2>' +
           '<p>' + (CEREMONY_COPY[track.id] || 'Component energized.') +
             (fullBoot ? '<br><br><b>Every light on this board is something you understand.</b> Keep the charge alive — the machine runs on memory as much as insight.' : '') + '</p>' +
+          (fullBoot ? '<p class="signature hand" style="text-align:center">— prepared by Omar :)</p>' : '') +
           quoteCard('boss') +
           '<button class="btn power" data-go="#/">RETURN TO THE MACHINE</button>' +
         '</div>' +

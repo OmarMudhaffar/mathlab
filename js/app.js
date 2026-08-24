@@ -68,4 +68,13 @@
   };
   window.Mentor.mount();
   route();
+
+  /* for whoever opens the hood */
+  try {
+    console.log(
+      '%c∧ Σ ⊗ ∂ ℙ  MATH LAB %c — prepared by Omar :)',
+      'font-family:monospace;font-weight:bold;color:#e9b13d;font-size:14px',
+      'font-family:cursive;color:#5f9be0;font-size:14px'
+    );
+  } catch (e) {}
 })();

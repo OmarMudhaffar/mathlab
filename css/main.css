@@ -921,6 +921,66 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 }
 .note-preview .nt-h1, .note-preview .nt-h2, .note-preview .nt-h3 { font-family: var(--serif); }
 
+/* component cards — paper catalog cards with a wax-seal glyph */
+.comp-card { border-radius: 10px; padding: 12px 14px; }
+.comp-card::before { display: none; }
+.comp-card .socket { display: none; }
+.comp-card .comp-top { margin-bottom: 8px; }
+.comp-card .comp-glyph {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--tc, var(--line-strong));
+  color: var(--tc, var(--ink-soft)); background: var(--surface-2);
+  font-family: var(--serif); font-style: italic; font-size: 15px; opacity: 1;
+}
+.comp-card.online .comp-glyph {
+  background: var(--power); border-color: var(--power); color: #2b2519;
+  box-shadow: 0 0 10px rgba(233, 177, 61, 0.45);
+}
+.comp-card h3 {
+  font-family: var(--serif); font-weight: 600; font-size: 13.5px;
+  letter-spacing: 0.06em;
+}
+
+/* tables — book style: horizontal rules only, italic serif headers */
+.tt { border-collapse: collapse; }
+.tt th {
+  border: none; border-bottom: 2px solid var(--line-strong);
+  background: transparent; font-family: var(--serif); font-style: italic;
+  font-weight: 600; font-size: 13.5px; padding: 6px 15px;
+}
+.tt td { border: none; border-bottom: 1px solid var(--line); padding: 6px 15px; }
+.tt tr:last-child td { border-bottom: none; }
+.ref-table th { font-family: var(--serif); font-style: italic; }
+.tbl-scroll { border: none; background: transparent; }
+
+/* CARDS IN GENERAL — one paper family: soft 10px corners, calm headers */
+.track-panel, .q-card, .summary-card, .note-card, .wshell,
+.mt-panel, .ceremony .box, .note-preview, .note-body, .node-notes { border-radius: 10px; }
+.tab-body { border-radius: 0 0 10px 10px; }
+.gym-card, .opt, .btn, .free-input, .onboard input, .order-step,
+.mt-setup input, .mt-setup select, .truthlab select { border-radius: 8px; }
+.next-up { border-radius: 0 10px 10px 0; }
+.callout { border-radius: 0 8px 8px 0; }
+.sol-panel, .hint-box, .verdict { border-radius: 0 10px 10px 0; }
+.verdict { border-radius: 10px; }
+.tab.active { border-radius: 8px 8px 0 0; }
+.truthlab { border-radius: 10px; border-color: var(--line); }
+
+/* panel headers: no filled strip — a clean book rule instead */
+.panel-head { background: transparent !important; border-bottom: 2px solid var(--line-strong) !important; }
+.panel-head .chip { border-radius: 50%; width: 10px; height: 10px; }
+
+/* quieter borders everywhere the shadow already lifts the card */
+.q-card, .summary-card, .note-card, .wshell, .track-panel { border-color: var(--line); }
+
+/* the maker's signature */
+.signature {
+  max-width: 560px; margin: 2px auto 0; text-align: right;
+  color: var(--ink-faint); font-size: 17px !important;
+  transform: rotate(-1.2deg); opacity: 0.85;
+}
+
 /* paper lift in the light theme (none in the dark lab) */
 .track-panel, .q-card, .summary-card, .comp-card, .next-up,
 .wshell, .note-card, .mt-panel, .gym-card, .sol-panel {
