@@ -290,6 +290,7 @@
       '</p>' +
       '<div class="machine-grid">' + compsHtml + '</div>' +
       bootHtml + nextHtml +
+      quoteCard('daily', true) +
       panelsHtml +
       '<div class="next-up quiet">' +
         '<span class="mono-label">study tools</span>' +
@@ -297,7 +298,6 @@
         '<button class="btn ghost" data-go="#/laws" style="margin-left:auto">📖 MANUAL</button>' +
         '<button class="btn ghost" data-go="#/gym" style="margin-left:0">∞ GYM</button>' +
       '</div>' +
-      quoteCard('daily', true) +
       '<div class="map-foot">' +
         oracleFoot +
         '<button class="wipe" id="ar-pref-btn" style="color:var(--accent)" title="show Arabic word helps next to English">' + (arOn() ? 'عربي: ON' : 'arabic help: OFF') + '</button>' +

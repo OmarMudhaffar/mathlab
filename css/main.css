@@ -25,7 +25,7 @@
   --t-prob: #cd7ec5;
   --code-bg: #0d1520;
   --grid: rgba(95, 155, 224, 0.045);
-  --card-shadow: none;
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0 6px 18px rgba(0, 0, 0, 0.30);
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --disp: "Archivo", "Arial Narrow", sans-serif;
   --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
@@ -842,6 +842,18 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 }
 
 /* ================= THE SCHOLAR'S MACHINE — library & hand touches ================= */
+
+/* the library speaks first: book serif for every major heading.
+   Tech (Archivo/mono) keeps the wordmark, buttons, and machine labels. */
+.screen-title, .node-head h1, .panel-head h2, .summary-card h2,
+.ceremony h2, .onboard h1, .note-title {
+  font-family: var(--serif); font-weight: 600; letter-spacing: 0;
+  font-variation-settings: normal;
+}
+.screen-title { font-size: 30px; }
+.node-head h1 { font-weight: 600; }
+.screen-sub { font-family: var(--serif); font-style: italic; font-size: 15.5px; }
+.onboard .pitch { font-family: var(--serif); font-style: italic; }
 
 /* lessons read like a book: warm serif for the prose, mono stays for code */
 #lesson-content { font-family: var(--serif); font-size: 16.5px; line-height: 1.78; }
