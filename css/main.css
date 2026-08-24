@@ -682,6 +682,15 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 .gym-card:hover { border-color: var(--power); transform: translateY(-2px); }
 .gym-card b { font-size: 14.5px; font-weight: 600; }
 .gym-card span { font-size: 13px; color: var(--ink-soft); }
+.gym-tier {
+  font-style: normal; font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.08em; vertical-align: 2px; padding: 1px 5px; border-radius: 8px;
+}
+.gym-tier.adv { color: var(--bad); border: 1px solid var(--bad); opacity: 0.85; }
+.sol-tip {
+  margin: 0 0 10px; font-size: 14px; line-height: 1.6; color: var(--ink);
+  background: rgba(233, 177, 61, 0.09); border-radius: 6px; padding: 9px 12px;
+}
 
 .sol-panel {
   border: 1px solid var(--power-dim); border-left: 3px solid var(--power);

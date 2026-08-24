@@ -637,19 +637,34 @@
     let html = topbarHtml() + '<div class="boot-in">' +
       '<button class="crumb" data-go="#/">← system schematic</button>' +
       '<h1 class="screen-title">Practice Gym · صالة التمارين</h1>' +
-      '<p class="screen-sub">Endless fresh equations (معادلات بلا نهاية) — every one comes with a step-by-step solution, a code version, and where it is used. +3 XP per correct answer.</p>';
+      '<p class="screen-sub">Endless fresh equations (معادلات بلا نهاية) — every one comes with a step-by-step solution, a code version, a 💡 trick, and where it is used. +3 XP per correct answer.</p>';
+
+    function cardsHtml(fams) {
+      return '<div class="gym-grid">' +
+        fams.map(g =>
+          '<button class="gym-card" data-go="#/drill/' + g.id + '">' +
+            '<b>' + esc(g.title) +
+            (g.tier === 'advanced' ? ' <i class="gym-tier adv">ADV</i>' : '') +
+            '</b><span>' + esc(g.titleAr) + '</span>' +
+          '</button>').join('') +
+        '</div>';
+    }
+
+    const basics = window.GENERATORS.filter(g => g.trackId === 'basics');
+    if (basics.length) {
+      html += '<div class="track-panel" style="--tc: var(--power)">' +
+        '<div class="panel-head"><span class="chip"></span><h2>School Basics — be FAST at these</h2>' +
+        '<span class="mono-label">أساسيات — السرعة هنا هي الهدف</span></div>' +
+        cardsHtml(basics) + '</div>';
+    }
     window.TRACKS.forEach(t => {
-      const fams = window.GENERATORS.filter(g => g.trackId === t.id);
+      const fams = window.GENERATORS.filter(g => g.trackId === t.id)
+        .sort((a, b) => (a.tier === 'advanced' ? 1 : 0) - (b.tier === 'advanced' ? 1 : 0));
       if (!fams.length) return;
       html += '<div class="track-panel" style="--tc: var(' + t.colorVar + ')">' +
         '<div class="panel-head"><span class="chip"></span><h2>' + t.title + '</h2>' +
         '<span class="mono-label">' + fams.length + ' machine' + (fams.length > 1 ? 's' : '') + '</span></div>' +
-        '<div class="gym-grid">' +
-        fams.map(g =>
-          '<button class="gym-card" data-go="#/drill/' + g.id + '">' +
-            '<b>' + esc(g.title) + '</b><span>' + esc(g.titleAr) + '</span>' +
-          '</button>').join('') +
-        '</div></div>';
+        cardsHtml(fams) + '</div>';
     });
     html += '</div>';
     root.innerHTML = html;
@@ -661,7 +676,7 @@
   function drill(root, genId) {
     const fam = window.GENERATORS.byId[genId];
     if (!fam) { window.App.go('#/gym'); return; }
-    const siblings = window.GENERATORS.byNode[fam.nodeId] || [fam];
+    const siblings = (fam.nodeId && window.GENERATORS.byNode[fam.nodeId]) || [fam];
     let ex = fam.gen();
     let attempted = 0, correct = 0, xpTotal = 0;
     let answered = false, revealed = false, counted = false;
@@ -675,6 +690,7 @@
         '<ol class="sol-steps">' + e.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' +
         '<p class="mono-label">💻 in code · بالكود</p>' +
         '<pre><code>' + esc(e.code) + '</code></pre>' +
+        (e.tip ? '<p class="sol-tip">' + e.tip + '</p>' : '') +
         '<p class="sol-usage">🌍 ' + e.usage + '</p>' +
       '</div>';
     }
@@ -722,7 +738,7 @@
         if (e.key === 'Enter') { e.preventDefault(); answered ? next() : submit(); }
       });
       window.Mentor.setContext({
-        where: 'drill', nodeId: fam.nodeId, level: 'l2',
+        where: 'drill', nodeId: fam.nodeId || undefined, level: 'l2',
         question: { prompt: textify(ex.prompt), hintsUsed: 0 }
       });
     }
@@ -736,7 +752,7 @@
       if (ok) {
         if (!answered) {
           if (!revealed) { xpTotal += 3; window.State.addXP(3); correct += 1; }
-          window.State.recordAttempt(fam.nodeId, true, null);
+          if (fam.nodeId) window.State.recordAttempt(fam.nodeId, true, null);
         }
         answered = true;
         v.innerHTML = '<div class="verdict ok"><p class="v-head">✓ VERIFIED' + (revealed ? ' (no XP — solution was shown)' : ' · +3 XP') + '</p></div>';
@@ -744,7 +760,7 @@
         const top = root.querySelector('.arena-top .mono-label:last-child');
         if (top) top.textContent = correct + '/' + attempted + ' · +' + xpTotal + ' XP';
       } else {
-        window.State.recordAttempt(fam.nodeId, false, null);
+        if (fam.nodeId) window.State.recordAttempt(fam.nodeId, false, null);
         v.innerHTML = '<div class="verdict bad"><p class="v-head">✗ NOT YET</p><p>Try again — or press 📖 SOLUTION to see the steps.</p></div>';
       }
     }

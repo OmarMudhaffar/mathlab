@@ -3,6 +3,27 @@
 window.REFERENCE = [
 
   {
+    section: 'Tips & Tricks', sectionAr: 'حيل الامتحان', color: '--power',
+    note: 'The moves that earn marks. Read this list the night before every exam.',
+    items: [
+      { f: 'plug the answer back in', name: 'The free check', ar: 'التحقق المجاني', note: '10 seconds after solving any equation — catches 90% of sign errors', nodeId: null },
+      { f: 'test formulas on n = 1, n = 2', name: 'Tiny-case test', ar: 'اختبار الحالات الصغيرة', note: 'Not sure if it is 2ⁿ or n²? Try n = 3: 8 vs 9. Rebuilds any formula', nodeId: null },
+      { f: '"at least one" → 1 − P(none)', name: 'Complement first', ar: 'المتممة أولاً', note: 'Turns many-case counting into one subtraction', nodeId: 'prob.samplespaces' },
+      { f: '÷ or × by NEGATIVE → flip the inequality', name: 'The inequality flip', ar: 'قلب المتباينة', note: 'The most-lost mark in algebra questions', nodeId: null },
+      { f: 'roots: sum = −b, product = c', name: 'Vieta’s shortcut', ar: 'اختصار فييتا', note: 'Find and CHECK quadratic roots without the formula (x² + bx + c)', nodeId: null },
+      { f: 'see 0/0 → factor & cancel first', name: 'The 0/0 routine', ar: 'روتين صفر على صفر', note: 'a² − b² = (a−b)(a+b) does most exam limits', nodeId: 'calc.limits' },
+      { f: 'chain rule: say "…times inside"', name: 'Inner-derivative alarm', ar: 'منبّه المشتقة الداخلية', note: 'The #1 calculus error is forgetting ×g′(x)', nodeId: 'calc.chain' },
+      { f: 'F(b) − F(a): write BOTH before computing', name: 'Both bounds', ar: 'الحدّان معاً', note: 'Integrals lose marks at the forgotten −F(a)', nodeId: 'calc.integration' },
+      { f: 'Bayes → draw the population square', name: 'Count, don’t formula', ar: 'عدّ ولا تحفظ', note: '1000 people, count each door — the formula falls out by itself', nodeId: 'prob.bayes' },
+      { f: 'reduce mod m at EVERY step', name: 'Reduce early', ar: 'اختصر مبكراً', note: 'Never compute the big power — numbers stay tiny, answer identical', nodeId: 'disc.modular' },
+      { f: 'pair the ends: (first + last) × count / 2', name: 'Gauss pairing', ar: 'ترتيب غاوس', note: 'Any arithmetic series in 5 seconds', nodeId: 'logic.induction' },
+      { f: '3-4-5 · 5-12-13 · 8-15-17 · 7-24-25', name: 'Pythagorean triples', ar: 'الثلاثيات الفيثاغورية', note: 'Exam vectors and triangles are built from these — spot them instantly', nodeId: 'la.vectors' },
+      { f: 'units must cancel correctly', name: 'Unit check', ar: 'فحص الوحدات', note: '(sales/°C)·(°C/hour) = sales/hour ✓ — wrong units = wrong formula, guaranteed', nodeId: 'calc.chain' },
+      { f: 'triangular matrix → eigenvalues on the diagonal', name: 'Read, don’t compute', ar: 'اقرأ ولا تحسب', note: 'Also: diagonal matrices, det of triangular = product of diagonal', nodeId: 'la.eigen' }
+    ]
+  },
+
+  {
     section: 'Logic Laws', sectionAr: 'قوانين المنطق', color: '--t-logic',
     items: [
       { f: '¬(p ∧ q) ≡ ¬p ∨ ¬q', name: 'De Morgan (AND)', ar: 'دي مورغان', note: 'Push NOT inside — the gate flips', nodeId: 'logic.demorgan' },
