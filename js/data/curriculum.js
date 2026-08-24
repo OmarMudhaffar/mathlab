@@ -3,7 +3,7 @@ window.NODES = {};
 
 window.TRACKS = [
   {
-    id: 'logic',
+    id: 'logic', glyph: '∧',
     title: 'Logic & Foundations',
     component: 'GATEWORK',
     componentSub: 'Control unit',
@@ -18,7 +18,7 @@ window.TRACKS = [
     bossId: 'boss.gatework'
   },
   {
-    id: 'discrete',
+    id: 'discrete', glyph: 'Σ',
     title: 'Discrete Mathematics',
     component: 'LATTICE',
     componentSub: 'Data & network',
@@ -33,7 +33,7 @@ window.TRACKS = [
     bossId: 'boss.lattice'
   },
   {
-    id: 'linear-algebra',
+    id: 'linear-algebra', glyph: '⊗',
     title: 'Linear Algebra',
     component: 'RENDER ENGINE',
     componentSub: 'Graphics',
@@ -48,7 +48,7 @@ window.TRACKS = [
     bossId: 'boss.render'
   },
   {
-    id: 'calculus',
+    id: 'calculus', glyph: '∂',
     title: 'Calculus / Analysis',
     component: 'OPTIMIZER',
     componentSub: 'Tuning',
@@ -63,7 +63,7 @@ window.TRACKS = [
     bossId: 'boss.optimizer'
   },
   {
-    id: 'probability',
+    id: 'probability', glyph: 'ℙ',
     title: 'Probability',
     component: 'ORACLE',
     componentSub: 'Randomness',

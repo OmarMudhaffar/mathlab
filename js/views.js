@@ -223,6 +223,7 @@
           '<span class="pct">' + tPct + '</span>' +
           '<h3>' + t.component + '</h3>' +
           '<p class="sub">' + t.componentSub + ' · ' + t.title + '</p>' +
+          '<span class="comp-glyph" aria-hidden="true">' + (t.glyph || '') + '</span>' +
         '</div>';
     });
 
@@ -275,8 +276,8 @@
     });
 
     const oracleFoot = window.State.isPowered('probability')
-      ? '<span class="mono-label" style="color:var(--t-prob)">' + PROPHECIES[Math.floor(Date.now() / DAY) % PROPHECIES.length] + '</span>'
-      : '<span class="mono-label">math lab p5 · full curriculum</span>';
+      ? '<span class="hand" style="color:var(--t-prob)">' + PROPHECIES[Math.floor(Date.now() / DAY) % PROPHECIES.length] + '</span>'
+      : '<span class="mono-label">math lab · your study machine</span>';
 
     root.innerHTML =
       topbarHtml() +

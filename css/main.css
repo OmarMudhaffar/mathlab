@@ -25,35 +25,39 @@
   --t-prob: #cd7ec5;
   --code-bg: #0d1520;
   --grid: rgba(95, 155, 224, 0.045);
+  --card-shadow: none;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --disp: "Archivo", "Arial Narrow", sans-serif;
   --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --serif: "Lora", Georgia, "Times New Roman", serif;
+  --hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
 }
 
-/* ---- light theme: drafting paper (for classrooms & daylight) ---- */
+/* ---- light theme: the library — warm aged paper, ink blue, brass ---- */
 :root[data-theme="light"] {
-  --ground: #f5f7fa;
-  --surface: #ffffff;
-  --surface-2: #edf1f6;
-  --surface-3: #e2e8f0;
-  --line: #d3dce6;
-  --line-strong: #b4c2d1;
-  --ink: #1c2733;
-  --ink-soft: #47586a;
-  --ink-faint: #7b8b9b;
-  --accent: #2e64ab;
-  --accent-deep: #2a5ea1;
-  --power: #a06f0e;
-  --power-dim: #cfa14a;
-  --ok: #23825c;
-  --bad: #bb4a35;
-  --t-logic: #a3711a;
-  --t-disc: #1d7a66;
-  --t-lin: #5a4fb8;
-  --t-calc: #a94c30;
-  --t-prob: #8d4386;
-  --code-bg: #eef2f7;
-  --grid: rgba(46, 100, 171, 0.05);
+  --ground: #f4f0e5;
+  --surface: #fdfbf3;
+  --surface-2: #efe9da;
+  --surface-3: #e6ddc9;
+  --line: #ded4bd;
+  --line-strong: #c4b89b;
+  --ink: #2b2519;
+  --ink-soft: #5c5340;
+  --ink-faint: #8d8168;
+  --accent: #2e5fa3;
+  --accent-deep: #274f88;
+  --power: #96690d;
+  --power-dim: #c9a84c;
+  --ok: #3d7c4f;
+  --bad: #ad4a30;
+  --t-logic: #8f6410;
+  --t-disc: #1d6e5a;
+  --t-lin: #55489e;
+  --t-calc: #a3492b;
+  --t-prob: #85407c;
+  --code-bg: #f0ead8;
+  --grid: rgba(150, 105, 13, 0.055);
+  --card-shadow: 0 1px 3px rgba(90, 75, 40, 0.10), 0 5px 16px rgba(90, 75, 40, 0.07);
 }
 
 * { box-sizing: border-box; }
@@ -298,11 +302,11 @@ body.gatework-on .topbar .trace { opacity: 0.9; }
 .next-up .btn { margin-left: auto; }
 
 .map-foot { margin-top: 30px; display: flex; gap: 18px; align-items: center; }
-.map-foot .wipe {
+.wipe {
   background: none; border: none; color: var(--ink-faint); cursor: pointer;
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-decoration: underline;
 }
-.map-foot .wipe:hover { color: var(--bad); }
+.wipe:hover { color: var(--bad); }
 
 /* ---------------- node view ---------------- */
 .crumb {
@@ -836,6 +840,78 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
   .tab-body { padding: 20px 16px; }
   .q-card { padding: 20px 16px; }
 }
+
+/* ================= THE SCHOLAR'S MACHINE — library & hand touches ================= */
+
+/* lessons read like a book: warm serif for the prose, mono stays for code */
+#lesson-content { font-family: var(--serif); font-size: 16.5px; line-height: 1.78; }
+#lesson-content h4 { font-family: var(--serif); font-weight: 600; font-size: 19.5px; letter-spacing: 0; }
+#lesson-content .callout { font-size: 15.5px; }
+#lesson-content code, #lesson-content pre, #lesson-content .tt { font-family: var(--mono); }
+#lesson-content.ar-content { font-family: var(--body); }
+.q-prompt { font-family: var(--serif); }
+
+/* drop cap on each lesson's opening paragraph — the book's welcome */
+#lesson-content:not(.ar-content) > h4:first-child + p::first-letter {
+  font-family: var(--serif); font-weight: 600; font-size: 3em;
+  float: left; line-height: 0.82; padding: 4px 8px 0 0; color: var(--power);
+}
+
+/* handwritten accents — the pencil in the margin */
+.hand {
+  font-family: var(--hand); font-size: 19px; font-weight: 500;
+  letter-spacing: 0.01em; text-transform: none;
+}
+.onboard h1 em { font-family: var(--hand); font-size: 1.18em; font-weight: 600; }
+
+.quote-card { border-top: none; transform: rotate(-0.5deg); padding-top: 6px; }
+.quote-card .q-text {
+  font-family: var(--hand); font-size: 26px; font-weight: 500; line-height: 1.35;
+}
+.quote-card .q-ar { font-size: 16px; }
+.quote-card .q-author { opacity: 0.85; }
+
+.sol-tip {
+  font-family: var(--hand); font-size: 20.5px; line-height: 1.4;
+  background: linear-gradient(transparent 62%, rgba(233, 177, 61, 0.16) 62%);
+  border-radius: 0; padding: 4px 6px 6px; transform: rotate(-0.35deg);
+}
+
+/* hand-drawn underline stroke beneath big titles */
+.screen-title { display: inline-block; position: relative; padding-bottom: 8px; }
+.screen-title::after {
+  content: ""; position: absolute; left: 1px; bottom: 0; height: 5px;
+  width: min(100%, 210px); background: var(--power); opacity: 0.65;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4 Q12 1 24 3.5 T48 3 T72 4.2 T96 2.6 T119 3.6' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4 Q12 1 24 3.5 T48 3 T72 4.2 T96 2.6 T119 3.6' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;
+  mask-size: 100% 100%;
+}
+
+/* each machine component signs itself with a math glyph */
+.comp-card .comp-glyph {
+  position: absolute; right: 9px; bottom: -2px; pointer-events: none;
+  font-family: var(--serif); font-style: italic; font-size: 34px;
+  color: var(--tc, var(--ink)); opacity: 0.13;
+}
+
+/* the notebook writes on ruled paper with a red margin line */
+.note-body, .note-preview {
+  font-size: 16px; line-height: 32px;
+  padding: 6px 20px 20px 58px;
+  background:
+    repeating-linear-gradient(transparent 0 31px, var(--line) 31px 32px),
+    linear-gradient(90deg, transparent 0 44px, rgba(176, 74, 48, 0.35) 44px 45px, transparent 45px),
+    var(--surface);
+}
+.note-preview .nt-h1, .note-preview .nt-h2, .note-preview .nt-h3 { font-family: var(--serif); }
+
+/* paper lift in the light theme (none in the dark lab) */
+.track-panel, .q-card, .summary-card, .comp-card, .next-up,
+.wshell, .note-card, .mt-panel, .gym-card, .sol-panel {
+  box-shadow: var(--card-shadow);
+}
+
 
 /* ================= PHONES ================= */
 @media (max-width: 700px) {
