@@ -300,7 +300,7 @@
         '<button class="btn ghost" data-go="#/laws" style="margin-left:auto">📖 MANUAL</button>' +
         '<button class="btn ghost" data-go="#/gym" style="margin-left:0">∞ GYM</button>' +
       '</div>' +
-      quoteCard('daily', true) +
+      quoteCard('daily') + /* fresh quote on every visit */
       '<p class="signature hand">— prepared by Omar :)</p>' +
       '<div class="map-foot">' +
         oracleFoot +
