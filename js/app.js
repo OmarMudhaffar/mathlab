@@ -3,13 +3,19 @@
   const root = document.getElementById('app');
 
   /* theme: dark (default) or light — saved, applied before first paint */
+  function syncThemeColor() {
+    const m = document.getElementById('meta-theme');
+    if (m) m.content = document.documentElement.dataset.theme === 'light' ? '#f5f7fa' : '#0b1119';
+  }
   try { if (localStorage.getItem('mathlab.theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+  syncThemeColor();
   document.addEventListener('click', e => {
     if (!e.target.closest('#theme-toggle')) return;
     const toLight = document.documentElement.dataset.theme !== 'light';
     if (toLight) document.documentElement.dataset.theme = 'light';
     else delete document.documentElement.dataset.theme;
     try { localStorage.setItem('mathlab.theme', toLight ? 'light' : 'dark'); } catch (err) {}
+    syncThemeColor();
     route(); /* re-render so canvas widgets pick up the new palette */
   });
 
