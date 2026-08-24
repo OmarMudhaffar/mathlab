@@ -5,9 +5,10 @@
   /* theme: dark (default) or light — saved, applied before first paint */
   function syncThemeColor() {
     const m = document.getElementById('meta-theme');
-    if (m) m.content = document.documentElement.dataset.theme === 'light' ? '#f5f7fa' : '#0b1119';
+    if (m) m.content = document.documentElement.dataset.theme === 'light' ? '#f4f0e5' : '#0b1119';
   }
-  try { if (localStorage.getItem('mathlab.theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+  /* light is the primary theme; dark stays one tap away (🌙) */
+  try { if (localStorage.getItem('mathlab.theme') !== 'dark') document.documentElement.dataset.theme = 'light'; } catch (e) { document.documentElement.dataset.theme = 'light'; }
   syncThemeColor();
   document.addEventListener('click', e => {
     if (!e.target.closest('#theme-toggle')) return;

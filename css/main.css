@@ -179,7 +179,7 @@ body.gatework-on .topbar .trace { opacity: 0.9; }
 .screen-sub { color: var(--ink-soft); margin: 0 0 26px; }
 
 .machine-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 22px 0 30px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; margin: 22px 0 30px;
 }
 .comp-card {
   border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
@@ -194,7 +194,10 @@ body.gatework-on .topbar .trace { opacity: 0.9; }
   margin: 6px 0 2px; font-size: 13px; font-weight: 720;
   letter-spacing: 0.06em; text-transform: uppercase;
 }
-.comp-card .sub { font-size: 12px; color: var(--ink-soft); margin: 0; }
+.comp-card .sub {
+  font-size: 11.5px; color: var(--ink-soft); margin: 0; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .comp-card .socket {
   width: 9px; height: 9px; border-radius: 50%; display: inline-block;
   border: 1.5px solid var(--tc, var(--line-strong));
@@ -203,10 +206,11 @@ body.gatework-on .topbar .trace { opacity: 0.9; }
   background: var(--power); border-color: var(--power);
   box-shadow: 0 0 10px rgba(233,177,61,0.8);
 }
+.comp-card .comp-top { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
 .comp-card .pct {
-  position: absolute; top: 10px; right: 10px;
-  font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
-  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .comp-card.online .pct { color: var(--power); }
 @media (max-width: 720px) { .machine-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -902,9 +906,8 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 
 /* each machine component signs itself with a math glyph */
 .comp-card .comp-glyph {
-  position: absolute; right: 9px; bottom: -2px; pointer-events: none;
-  font-family: var(--serif); font-style: italic; font-size: 34px;
-  color: var(--tc, var(--ink)); opacity: 0.13;
+  font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1;
+  color: var(--tc, var(--ink)); opacity: 0.85; pointer-events: none;
 }
 
 /* the notebook writes on ruled paper with a red margin line */
@@ -927,7 +930,12 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 
 /* ================= PHONES ================= */
 @media (max-width: 700px) {
+  body { font-size: 16px; }
   #app { padding: 0 14px 70px; }
+  .mono-label { font-size: 12px; }
+  .node-row { font-size: 15.5px; }
+  .node-row .payoff { font-size: 13px; }
+  #lesson-content { font-size: 17px; }
 
   /* topbar: icon-only chips, drop the tagline, allow wrap */
   .topbar { gap: 9px; flex-wrap: wrap; padding: 12px 0 10px; }
@@ -938,7 +946,7 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
   .topbar .wordmark { font-size: 17px; }
 
   .screen-title { font-size: 22px; margin-top: 22px; }
-  .screen-sub { font-size: 14px; }
+  .screen-sub { font-size: 15px; }
   .onboard { padding-top: 36px; }
   .onboard .pitch { font-size: 15.5px; }
 
@@ -958,8 +966,8 @@ body.optimizer-on .node-row:hover:not(:disabled) { transform: translateX(4px); }
 
   .arena-top { flex-wrap: wrap; row-gap: 6px; }
   .dots { flex-wrap: wrap; max-width: 100%; }
-  .q-prompt { font-size: 15.5px; }
-  .opt { font-size: 14px; padding: 10px 12px; }
+  .q-prompt { font-size: 16.5px; }
+  .opt { font-size: 15px; padding: 11px 13px; }
   .summary-card { padding: 22px 14px; }
   .summary-card .big-xp { font-size: 28px; }
   .ceremony .box { padding: 28px 18px; }

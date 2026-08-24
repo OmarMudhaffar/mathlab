@@ -219,11 +219,13 @@
       const tPct = on ? '100%' : unlocked ? Math.round(window.State.trackProgress(t.id) * 100) + '%' : 'LOCKED';
       compsHtml +=
         '<div class="comp-card ' + (unlocked ? '' : 'offline') + (on ? ' online' : '') + '" style="--tc: var(' + t.colorVar + ')">' +
-          '<span class="socket"></span>' +
-          '<span class="pct">' + tPct + '</span>' +
+          '<div class="comp-top">' +
+            '<span class="socket"></span>' +
+            '<span class="comp-glyph" aria-hidden="true">' + (t.glyph || '') + '</span>' +
+            '<span class="pct">' + tPct + '</span>' +
+          '</div>' +
           '<h3>' + t.component + '</h3>' +
           '<p class="sub">' + t.componentSub + ' · ' + t.title + '</p>' +
-          '<span class="comp-glyph" aria-hidden="true">' + (t.glyph || '') + '</span>' +
         '</div>';
     });
 
@@ -290,7 +292,6 @@
       '</p>' +
       '<div class="machine-grid">' + compsHtml + '</div>' +
       bootHtml + nextHtml +
-      quoteCard('daily', true) +
       panelsHtml +
       '<div class="next-up quiet">' +
         '<span class="mono-label">study tools</span>' +
@@ -298,6 +299,7 @@
         '<button class="btn ghost" data-go="#/laws" style="margin-left:auto">📖 MANUAL</button>' +
         '<button class="btn ghost" data-go="#/gym" style="margin-left:0">∞ GYM</button>' +
       '</div>' +
+      quoteCard('daily', true) +
       '<div class="map-foot">' +
         oracleFoot +
         '<button class="wipe" id="ar-pref-btn" style="color:var(--accent)" title="show Arabic word helps next to English">' + (arOn() ? 'عربي: ON' : 'arabic help: OFF') + '</button>' +
