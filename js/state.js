@@ -74,6 +74,33 @@
 
     wipe() { cache = null; try { localStorage.removeItem(KEY); } catch (e) {} },
 
+    /* switch the programmer fast-track on/off WITHOUT losing real progress */
+    setProgrammer(on) {
+      const s = load();
+      s.profile.programmer = !!on;
+      if (on) {
+        [['logic.props', 'applied'], ['logic.demorgan', 'discovered']].forEach(([id, target]) => {
+          const rec = State.conceptRec(id);
+          const current = rec.state === 'locked' ? 'available' : rec.state;
+          if (State.rank(current) < State.rank(target)) {
+            rec.state = target;
+            rec.fastTracked = true;
+            if (target === 'applied' && !rec.nextReview) {
+              const now = Date.now();
+              rec.intervalDays = 1; rec.lastReview = now; rec.nextReview = now + DAY; rec.retention = 0;
+            }
+          }
+        });
+      } else {
+        ['logic.props', 'logic.demorgan'].forEach(id => {
+          const rec = s.concepts[id];
+          if (rec && rec.fastTracked && rec.attempts === 0) delete s.concepts[id]; /* untouched → back to zero */
+          else if (rec) delete rec.fastTracked; /* real work done → keep it */
+        });
+      }
+      save();
+    },
+
     /* ---- concept records ---- */
     conceptRec(id) {
       const s = load();

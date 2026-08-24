@@ -157,7 +157,11 @@
     }
     document.getElementById('ob-prog').addEventListener('click', () => start(true));
     document.getElementById('ob-full').addEventListener('click', () => start(false));
-    document.getElementById('ob-form').addEventListener('submit', e => { e.preventDefault(); start(true); });
+    /* Enter must NOT silently pick a path — the user chooses with a click */
+    document.getElementById('ob-form').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('ob-prog').focus();
+    });
   }
 
   /* ================= SYSTEM MAP ================= */
@@ -278,7 +282,11 @@
       topbarHtml() +
       '<div class="boot-in">' +
       '<h1 class="screen-title">System schematic</h1>' +
-      '<p class="screen-sub">Operator: <b>' + esc(s.profile.name) + '</b>' + (s.profile.programmer ? ' · <span class="mono-label" style="color:var(--power)">programmer fast-track</span>' : '') + '</p>' +
+      '<p class="screen-sub">Operator: <b>' + esc(s.profile.name) + '</b> · ' +
+        (s.profile.programmer
+          ? '<button class="wipe" id="prog-toggle" style="color:var(--power)" title="turn OFF: study 1.1 and 1.2 from zero (keeps your progress)">programmer fast-track ✕</button>'
+          : '<button class="wipe" id="prog-toggle" title="turn ON: skip the basics of 1.1 (conditions, &&, ||)">enable programmer fast-track</button>') +
+      '</p>' +
       '<div class="machine-grid">' + compsHtml + '</div>' +
       bootHtml + nextHtml +
       panelsHtml +
@@ -301,6 +309,13 @@
 
     bindNav(root);
     window.Mentor.setContext({ where: 'map' });
+    document.getElementById('prog-toggle').addEventListener('click', () => {
+      const on = window.State.get().profile.programmer;
+      const msg = on
+        ? 'Turn OFF fast-track? Lessons 1.1 and 1.2 open for full study from zero. Your other progress is kept.'
+        : 'Turn ON fast-track? Lesson 1.1 (conditions, &&, ||, short-circuit) will be marked complete.';
+      if (confirm(msg)) { window.State.setProgrammer(!on); window.App.refresh(); }
+    });
     document.getElementById('ar-pref-btn').addEventListener('click', () => {
       try { localStorage.setItem('mathlab.ar', arOn() ? 'off' : 'on'); } catch (e) {}
       window.App.refresh();
