@@ -27,7 +27,31 @@ window.QUOTES = {
     { t: 'Seek knowledge from the cradle to the grave.', a: 'Arabic wisdom',
       ar: 'اطلب العلم من المهد إلى اللحد.' },
     { t: 'The man who moves a mountain begins by carrying away small stones.', a: 'Confucius',
-      ar: 'من يحرّك جبلاً يبدأ بحمل الحجارة الصغيرة.' }
+      ar: 'من يحرّك جبلاً يبدأ بحمل الحجارة الصغيرة.' },
+    { t: 'Whether you think you can, or you think you can’t — you’re right.', a: 'Henry Ford',
+      ar: 'سواء ظننت أنك تستطيع أو أنك لا تستطيع — فأنت على حق.' },
+    { t: 'An investment in knowledge pays the best interest.', a: 'Benjamin Franklin',
+      ar: 'الاستثمار في المعرفة يدفع أفضل الأرباح.' },
+    { t: 'The mind is not a vessel to be filled, but a fire to be kindled.', a: 'Plutarch',
+      ar: 'العقل ليس وعاءً يُملأ، بل نار تُشعل.' },
+    { t: 'Don’t watch the clock; do what it does. Keep going.', a: 'Sam Levenson',
+      ar: 'لا تراقب الساعة؛ افعل ما تفعله هي — استمرّ.' },
+    { t: 'Hard work beats talent when talent doesn’t work hard.', a: 'Tim Notke',
+      ar: 'العمل الجاد يهزم الموهبة عندما لا تعمل الموهبة بجدّ.' },
+    { t: 'A journey of a thousand miles begins with a single step.', a: 'Lao Tzu',
+      ar: 'رحلة الألف ميل تبدأ بخطوة واحدة.' },
+    { t: 'He who is not courageous enough to take risks will accomplish nothing in life.', a: 'Muhammad Ali',
+      ar: 'من لا يملك شجاعة المخاطرة لن يحقق شيئاً في الحياة.' },
+    { t: 'Pure mathematics is, in its way, the poetry of logical ideas.', a: 'Albert Einstein',
+      ar: 'الرياضيات الخالصة هي، بطريقتها، شعر الأفكار المنطقية.' },
+    { t: 'Mathematics is the music of reason.', a: 'James Joseph Sylvester',
+      ar: 'الرياضيات هي موسيقى العقل.' },
+    { t: 'Who strives shall find.', a: 'Arabic proverb',
+      ar: 'من جدّ وجد، ومن زرع حصد.' },
+    { t: 'Learning in youth is like carving in stone.', a: 'Arabic proverb',
+      ar: 'العلم في الصغر كالنقش على الحجر.' },
+    { t: 'In the middle of difficulty lies opportunity.', a: 'attributed to Albert Einstein',
+      ar: 'في قلب الصعوبة تكمن الفرصة.' }
   ],
 
   /* after a passed run — keep the fire */
@@ -43,7 +67,21 @@ window.QUOTES = {
     { t: 'Small daily improvements are the key to staggering long-term results.', a: 'Robin Sharma',
       ar: 'التحسينات الصغيرة اليومية هي مفتاح نتائج مذهلة على المدى الطويل.' },
     { t: 'What we learn with pleasure we never forget.', a: 'Alfred Mercier',
-      ar: 'ما نتعلمه بمتعة لا ننساه أبداً.' }
+      ar: 'ما نتعلمه بمتعة لا ننساه أبداً.' },
+    { t: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', a: 'Winston Churchill',
+      ar: 'النجاح ليس نهائياً والفشل ليس قاتلاً: الشجاعة على الاستمرار هي ما يهم.' },
+    { t: 'Little by little, one travels far.', a: 'Spanish proverb',
+      ar: 'شيئاً فشيئاً، يقطع المرء مسافات بعيدة.' },
+    { t: 'Winning is a habit. Unfortunately, so is losing.', a: 'Vince Lombardi',
+      ar: 'الفوز عادة — وللأسف، الخسارة كذلك.' },
+    { t: 'The reward for work well done is the opportunity to do more.', a: 'Jonas Salk',
+      ar: 'مكافأة العمل المتقن هي فرصة عمل المزيد.' },
+    { t: 'Every accomplishment starts with the decision to try.', a: 'John F. Kennedy',
+      ar: 'كل إنجاز يبدأ بقرار المحاولة.' },
+    { t: 'Practice isn’t the thing you do once you’re good. It’s the thing you do that makes you good.', a: 'Malcolm Gladwell',
+      ar: 'التمرين ليس ما تفعله بعد أن تصبح جيداً، بل هو ما يجعلك جيداً.' },
+    { t: 'You don’t have to be great to start, but you have to start to be great.', a: 'Zig Ziglar',
+      ar: 'لا يجب أن تكون عظيماً لتبدأ، لكن يجب أن تبدأ لتكون عظيماً.' }
   ],
 
   /* after a failed run — resilience, no shame */
@@ -63,7 +101,23 @@ window.QUOTES = {
     { t: 'A person who never made a mistake never tried anything new.', a: 'Albert Einstein',
       ar: 'من لم يخطئ قط، لم يجرّب شيئاً جديداً قط.' },
     { t: 'Difficulties strengthen the mind, as labor does the body.', a: 'Seneca',
-      ar: 'الصعوبات تقوّي العقل كما يقوّي العملُ الجسد.' }
+      ar: 'الصعوبات تقوّي العقل كما يقوّي العملُ الجسد.' },
+    { t: 'Success consists of going from failure to failure without loss of enthusiasm.', a: 'Winston Churchill',
+      ar: 'النجاح هو الانتقال من فشل إلى فشل دون أن تفقد الحماس.' },
+    { t: 'The master has failed more times than the beginner has even tried.', a: 'Stephen McCranie',
+      ar: 'المعلّم فشل مرات أكثر مما حاول المبتدئ أصلاً.' },
+    { t: 'Do not judge me by my successes, judge me by how many times I fell down and got back up again.', a: 'Nelson Mandela',
+      ar: 'لا تحكموا عليّ بنجاحاتي، بل بعدد المرات التي سقطت فيها ونهضت من جديد.' },
+    { t: 'It’s not that I’m so smart, it’s just that I stay with problems longer.', a: 'Albert Einstein',
+      ar: 'لست شديد الذكاء، لكنني أبقى مع المسائل وقتاً أطول.' },
+    { t: 'When you are going through hell, keep going.', a: 'Winston Churchill',
+      ar: 'إن كنت تمرّ بجحيم، فواصل السير.' },
+    { t: 'Failure is simply the opportunity to begin again, this time more intelligently.', a: 'Henry Ford',
+      ar: 'الفشل ليس إلا فرصة للبدء من جديد — بذكاء أكبر هذه المرة.' },
+    { t: 'Patience is the key to relief.', a: 'Arabic proverb',
+      ar: 'الصبر مفتاح الفرج.' },
+    { t: 'Everything you want is on the other side of fear.', a: 'George Adair',
+      ar: 'كل ما تريده يقع على الجانب الآخر من الخوف.' }
   ],
 
   /* boss victories & ceremonies — triumph */
@@ -75,6 +129,18 @@ window.QUOTES = {
     { t: 'The harder the battle, the sweeter the victory.', a: 'Les Brown',
       ar: 'كلما اشتدت المعركة، كان النصر أحلى.' },
     { t: 'Great things are done by a series of small things brought together.', a: 'Vincent van Gogh',
-      ar: 'الأشياء العظيمة تُصنع من سلسلة أشياء صغيرة اجتمعت معاً.' }
+      ar: 'الأشياء العظيمة تُصنع من سلسلة أشياء صغيرة اجتمعت معاً.' },
+    { t: 'It is not the mountain we conquer, but ourselves.', a: 'Edmund Hillary',
+      ar: 'لسنا نقهر الجبل، بل أنفسنا.' },
+    { t: 'After climbing a great hill, one only finds that there are many more hills to climb.', a: 'Nelson Mandela',
+      ar: 'بعد تسلّق تلّة عظيمة، يكتشف المرء أن هناك تلالاً كثيرة أخرى تنتظر.' },
+    { t: 'Fortune favors the bold.', a: 'Virgil',
+      ar: 'الحظ يحالف الجريء.' },
+    { t: 'The best way to predict the future is to create it.', a: 'Peter Drucker',
+      ar: 'أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه.' },
+    { t: 'You miss 100% of the shots you don’t take.', a: 'Wayne Gretzky',
+      ar: 'تخسر ١٠٠٪ من التسديدات التي لا تحاولها.' },
+    { t: 'Dig the well before you are thirsty.', a: 'Chinese proverb',
+      ar: 'احفر البئر قبل أن تعطش.' }
   ]
 };
